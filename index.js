@@ -25,7 +25,7 @@ async function main() {
         return pull['head']['sha'] === headCommit
     });
     if (pull) {
-        throw "Pull request not found";
+        throw 'Pull request not found';
     }
 
     core.setOutput("time", pull['number']);
