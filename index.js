@@ -1,7 +1,11 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs');
 
 try {
+    const contents = fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8');
+    console.log(JSON.parse(contents))
+
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = core.getInput('who-to-greet');
     console.log(`Hello ${nameToGreet}!`);
