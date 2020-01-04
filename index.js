@@ -25,14 +25,13 @@ async function main() {
     });
     if (!pull) {
         console.log('Pull request not found');
-    } else {
-        console.log(JSON.stringify(pull, undefined, 2));
+        core.setOutput('is_found', false);
+        return
     }
 
-    core.setOutput("time", pull);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    console.log(JSON.stringify(pull, undefined, 2));
+    core.setOutput('is_found', true);
+    core.setOutput('number', pull['number']);
 }
 
 main().catch(error => core.setFailed(error.message));
