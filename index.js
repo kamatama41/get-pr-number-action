@@ -15,7 +15,7 @@ async function main() {
     const githubToken = core.getInput('github_token');
     const octokit = new Octokit({auth: githubToken});
 
-    const {data: pulls} = octokit.pulls.list({
+    const {data: pulls} = await octokit.pulls.list({
         owner: owner,
         repo: repo,
         state: 'open',
