@@ -2170,7 +2170,7 @@ async function main() {
     const fullName = event['repository']['full_name'];
     const [owner, repo] = fullName.split('/');
     const headCommit = event['head_commit']['id'];
-    console.log(`The event payload: ${JSON.stringify(event, undefined, 2)}`);
+    core.debug(`The event payload: ${JSON.stringify(event, undefined, 2)}`);
 
     const {data: pulls} = await octokit.pulls.list({
         owner: owner,
@@ -2187,7 +2187,7 @@ async function main() {
         return
     }
 
-    console.log(`The PR info: ${JSON.stringify(pull, undefined, 2)}`);
+    core.debug(`The PR info: ${JSON.stringify(pull, undefined, 2)}`);
     core.setOutput('is_found', true);
     core.setOutput('number', pull['number']);
 }
