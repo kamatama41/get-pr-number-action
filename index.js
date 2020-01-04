@@ -20,6 +20,7 @@ async function main() {
         repo: repo,
         state: 'open',
     });
+    console.log(pulls);
 
     const pull = pulls.find(pull => {
         return pull['head']['sha'] === headCommit
