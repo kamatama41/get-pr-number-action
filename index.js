@@ -1,22 +1,33 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const Octokit = require("@octokit/rest");
 const fs = require('fs');
 
-try {
+async function main() {
     const contents = fs.readFileSync(process.env['GITHUB_EVENT_PATH'], 'utf8');
-    console.log(contents);
+    // console.log(contents);
     const event = JSON.parse(contents);
+    const fullName = event['repository']['full_name'];
+    const [owner, repo] = fullName.split('/');
+    const headCommit = event['head_commit']['id'];
 
     const githubToken = core.getInput('github_token');
+    const octokit = new Octokit({auth: githubToken});
 
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
-    const time = (new Date()).toTimeString();
-    core.setOutput("time", time);
+    const {data: pulls} = octokit.pulls.list({
+        owner: owner,
+        repo: repo,
+        state: 'open',
+    });
+
+    const pull = pulls.find(pull => {
+        return pull['head']['sha'] === headCommit
+    });
+
+    core.setOutput("time", pull['number']);
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload: ${payload}`);
-} catch (error) {
-    core.setFailed(error.message);
 }
+
+main().catch(error => core.setFailed(error.message));

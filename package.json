@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kamatama41/set-pr-info-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@actions/github": "^2.0.0"
+    "@actions/github": "^2.0.0",
+    "@octokit/rest": "^16.36.0"
   }
 }
