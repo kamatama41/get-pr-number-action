@@ -2162,8 +2162,12 @@ module.exports = isPlainObject;
 
 const core = __webpack_require__(632);
 const github = __webpack_require__(260);
+const fs = __webpack_require__(747);
 
 try {
+    const contents = fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8');
+    console.log(JSON.parse(contents))
+
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = core.getInput('who-to-greet');
     console.log(`Hello ${nameToGreet}!`);
