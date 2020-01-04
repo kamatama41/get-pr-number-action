@@ -2173,6 +2173,7 @@ async function main() {
     const [owner, repo] = fullName.split('/');
     const headCommit = event['head_commit']['id'];
 
+    console.log(owner, repo, headCommit);
     const githubToken = core.getInput('github_token');
     const octokit = new Octokit({auth: githubToken});
 
