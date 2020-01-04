@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/kamatama41/set-pr-info-action/issues"
   },
-  "homepage": "https://github.com/kamatama41/set-pr-info-action#readme"
+  "homepage": "https://github.com/kamatama41/set-pr-info-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.0.0"
+  }
 }
