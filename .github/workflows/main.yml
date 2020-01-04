@@ -8,9 +8,8 @@ jobs:
     - name: Hello world action step
       id: hello
       uses: kamatama41/set-pr-info-action@init
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         who-to-greet: 'Mona the Octocat'
     # Use the output from the `hello` step
     - name: Get the output time

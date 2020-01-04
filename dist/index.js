@@ -2164,15 +2164,12 @@ const core = __webpack_require__(632);
 const github = __webpack_require__(260);
 const fs = __webpack_require__(747);
 
-if (!("GITHUB_TOKEN" in process.env)) {
-    core.setFailed('GITHUB_TOKEN must be set.');
-    return
-}
-const GITHUB_TOKEN = process.env['GITHUB_TOKEN'];
-
 try {
     const contents = fs.readFileSync(process.env['GITHUB_EVENT_PATH'], 'utf8');
-    console.log(JSON.parse(contents));
+    console.log(contents);
+    const event = JSON.parse(contents);
+
+    const githubToken = core.getInput('github_token');
 
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = core.getInput('who-to-greet');
