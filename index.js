@@ -1,17 +1,14 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const Octokit = require("@octokit/rest");
-const fs = require('fs');
+const octokit = new Octokit({auth: core.getInput('github_token')});
 
 async function main() {
-    const contents = fs.readFileSync(process.env['GITHUB_EVENT_PATH'], 'utf8');
-    const event = JSON.parse(contents);
+    const event = github.context.payload;
     const fullName = event['repository']['full_name'];
     const [owner, repo] = fullName.split('/');
     const headCommit = event['head_commit']['id'];
-
-    console.log(owner, repo, headCommit);
-    const githubToken = core.getInput('github_token');
-    const octokit = new Octokit({auth: githubToken});
+    console.log(`The event payload: ${JSON.stringify(event, undefined, 2)}`);
 
     const {data: pulls} = await octokit.pulls.list({
         owner: owner,
@@ -28,7 +25,7 @@ async function main() {
         return
     }
 
-    console.log(JSON.stringify(pull, undefined, 2));
+    console.log(`The PR info: ${JSON.stringify(pull, undefined, 2)}`);
     core.setOutput('is_found', true);
     core.setOutput('number', pull['number']);
 }
