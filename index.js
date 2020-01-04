@@ -5,7 +5,6 @@ const fs = require('fs');
 
 async function main() {
     const contents = fs.readFileSync(process.env['GITHUB_EVENT_PATH'], 'utf8');
-    // console.log(contents);
     const event = JSON.parse(contents);
     const fullName = event['repository']['full_name'];
     const [owner, repo] = fullName.split('/');
@@ -24,11 +23,13 @@ async function main() {
     const pull = pulls.find(pull => {
         return pull['head']['sha'] === headCommit
     });
-    if (pull) {
-        throw new Error('Pull request not found');
+    if (!pull) {
+        console.log('Pull request not found');
+    } else {
+        console.log(JSON.stringify(pull));
     }
 
-    core.setOutput("time", pull['number']);
+    core.setOutput("time", pull);
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload: ${payload}`);
