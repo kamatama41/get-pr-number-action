@@ -2188,7 +2188,7 @@ async function main() {
     if (!pull) {
         console.log('Pull request not found');
     } else {
-        console.log(JSON.stringify(pull));
+        console.log(JSON.stringify(pull, undefined, 2));
     }
 
     core.setOutput("time", pull);

@@ -1,16 +1,14 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Set pull request information'
+description: 'Retrieve pull request information and set it into outputs'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   github_token:
     description: 'Access token of GitHub'
     required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  is_found:
+    description: 'A boolean value to indicate a pull request is found'
+  number:
+    description: 'Number of pull request'
 runs:
   using: 'node12'
   main: 'dist/index.js'

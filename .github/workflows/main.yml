@@ -1,16 +1,17 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  set_pr_info_job:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
     - name: Hello world action step
-      id: hello
+      id: pr_info
       uses: kamatama41/set-pr-info-action@init
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        who-to-greet: 'Mona the Octocat'
     # Use the output from the `hello` step
     - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+      if: steps.pr_info.outputs.is_found
+      run: |
+        echo "The number of PR is ${{ steps.pr_info.outputs.number }}"
