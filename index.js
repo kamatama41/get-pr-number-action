@@ -20,11 +20,13 @@ async function main() {
         repo: repo,
         state: 'open',
     });
-    console.log(pulls);
 
     const pull = pulls.find(pull => {
         return pull['head']['sha'] === headCommit
     });
+    if (pull) {
+        throw "Pull request not found";
+    }
 
     core.setOutput("time", pull['number']);
     // Get the JSON webhook payload for the event that triggered the workflow
