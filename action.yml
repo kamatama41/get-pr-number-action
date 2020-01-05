@@ -1,12 +1,10 @@
-name: 'Set pull request information'
-description: 'Retrieve pull request information and set it into outputs'
+name: 'Get pull request number action'
+description: 'Provide a consistent approach to get number of a pull request'
 inputs:
   github_token:
     description: 'Access token of GitHub'
     required: true
 outputs:
-  is_found:
-    description: 'A boolean value to indicate a pull request is found'
   number:
     description: 'Number of pull request'
 runs:

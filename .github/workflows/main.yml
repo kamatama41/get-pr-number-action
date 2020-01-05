@@ -22,7 +22,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Assertion
       run: |
-        if [[ "${{ steps.action.outputs.is_found }}" != "true" ]]; then
+        if [[ "${{ steps.action.outputs.number }}" == "" ]]; then
           echo "PR not found"
           exit 1
         fi
