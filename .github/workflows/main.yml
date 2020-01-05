@@ -12,6 +12,9 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Get the outputs
-      if: steps.action.outputs.is_found
       run: |
-        echo "The number of PR is ${{ steps.action.outputs.number }}"
+        if [[ "${{ steps.action.outputs.is_found }}" == "true" ]]; then
+          echo "PR not found"
+          exit 1
+        fi
+        echo "${{ toJson(steps.action.outputs) }}"
