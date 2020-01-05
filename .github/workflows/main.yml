@@ -6,6 +6,14 @@ jobs:
     name: An integration test
     steps:
     - uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Generate index.js
+      run: |
+        npm i -g @zeit/ncc
+        ncc build index.js
     - name: Run action
       id: action
       uses: ./
