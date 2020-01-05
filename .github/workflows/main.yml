@@ -6,12 +6,12 @@ jobs:
     name: An integration test
     steps:
     - uses: actions/checkout@v2
-    - name: Get PR info
-      id: pr_info
+    - name: Run action
+      id: action
       uses: ./
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Get the outputs
-      if: steps.pr_info.outputs.is_found
+      if: steps.action.outputs.is_found
       run: |
-        echo "The number of PR is ${{ steps.pr_info.outputs.number }}"
+        echo "The number of PR is ${{ steps.action.outputs.number }}"
