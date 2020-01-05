@@ -11,8 +11,6 @@ jobs:
       uses: ./
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-      env:
-        ACTIONS_RUNNER_DEBUG: true
     - name: Get the outputs
       if: steps.action.outputs.is_found
       run: |
