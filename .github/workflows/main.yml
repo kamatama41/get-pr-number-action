@@ -11,9 +11,9 @@ jobs:
       uses: ./
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get the outputs
+    - name: Assertion
       run: |
-        if [[ "${{ steps.action.outputs.is_found }}" == "true" ]]; then
+        if [[ "${{ steps.action.outputs.is_found }}" != "true" ]]; then
           echo "PR not found"
           exit 1
         fi
