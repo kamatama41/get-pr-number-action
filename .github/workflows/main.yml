@@ -5,10 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     name: An integration test
     steps:
-    - uses: actions/checkout@v2
     - name: Get PR info
       id: pr_info
-      uses: .
+      uses: kamatama41/set-pr-info-action@${{ github.sha }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Get the outputs
