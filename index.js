@@ -8,7 +8,7 @@ async function main() {
     const fullName = event['repository']['full_name'];
     const [owner, repo] = fullName.split('/');
     const headCommit = event['head_commit']['id'];
-    core.debug(`The event payload: ${JSON.stringify(event, undefined, 2)}`);
+    core.debug(`The event payload: ${JSON.stringify(github.context, undefined, 2)}`);
 
     const {data: pulls} = await octokit.pulls.list({
         owner: owner,
