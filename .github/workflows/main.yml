@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-  integration_test:
+  test:
     runs-on: ubuntu-latest
     name: An integration test
     steps:
