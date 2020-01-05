@@ -10,9 +10,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: Generate index.js
+    - name: Install dependencies
       run: |
-        npm i -g @zeit/ncc
+        npm install -g @zeit/ncc
+        npm install
         ncc build index.js
     - name: Run action
       id: action
