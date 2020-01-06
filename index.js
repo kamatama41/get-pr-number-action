@@ -5,7 +5,7 @@ const octokit = new Octokit({auth: core.getInput('github_token')});
 
 async function main() {
     core.debug(`The context info: ${JSON.stringify(github.context, undefined, 2)}`);
-    const eventName = github.context['eventName'];
+    const eventName = github.context.eventName;
     const payload = github.context.payload;
 
     let prNumber;
