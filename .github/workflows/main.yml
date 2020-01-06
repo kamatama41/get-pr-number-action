@@ -29,6 +29,8 @@ jobs:
         echo "${{ toJson(steps.action.outputs) }}"
     - name: Commit compiled file
       run: |
+        git config --global user.email "shiketaudonko41@gmail.com"
+        git config --global user.name "kamatama41"
         git add dist/index.js
         git commit -m 'Compile index.js'
     - name: Bump version and push tag
