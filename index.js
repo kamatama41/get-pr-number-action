@@ -10,7 +10,7 @@ function extractPrNumber(message) {
         return res[1]
     }
     // Check as a squash commit
-    res = message.match(/ \(\#\d+\)$/);
+    res = message.match(/ \(\#(\d+)\)$/);
     if (res) {
         return res[1]
     }
