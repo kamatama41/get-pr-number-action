@@ -3,6 +3,20 @@ const github = require('@actions/github');
 const Octokit = require("@octokit/rest");
 const octokit = new Octokit({auth: core.getInput('github_token')});
 
+function extractPrNumber(message) {
+    // Check as a merge commit
+    let res = message.match(/^Merge pull request \#(\d+)/);
+    if (res) {
+        return res[1]
+    }
+    // Check as a squash commit
+    res = message.match(/ \(\#\d+\)$/);
+    if (res) {
+        return res[1]
+    }
+    throw new Error('Could not extract PR number from commit message');
+}
+
 async function main() {
     core.debug(`The context info: ${JSON.stringify(github.context, undefined, 2)}`);
     const eventName = github.context.eventName;
@@ -16,7 +30,7 @@ async function main() {
         case 'push':
             const fullName = payload['repository']['full_name'];
             const [owner, repo] = fullName.split('/');
-            const headCommit = payload['head_commit']['id'];
+            const headCommit = payload['head_commit'];
 
             const {data: pulls} = await octokit.pulls.list({
                 owner: owner,
@@ -25,13 +39,14 @@ async function main() {
             });
 
             const pull = pulls.find(pull => {
-                return pull['head']['sha'] === headCommit
+                return pull['head']['sha'] === headCommit['id']
             });
 
-            if (!pull) {
-                throw new Error('Pull request not found');
+            if (pull) {
+                prNumber = pull['number'];
+            } else {
+                prNumber = extractPrNumber(headCommit['message']);
             }
-            prNumber = pull['number'];
             break;
         default:
             throw new Error(`Unsupported event: ${eventName}`);
