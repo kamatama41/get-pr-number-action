@@ -1,0 +1,25 @@
+{
+  "name": "set-pr-info-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamatama41/set-pr-info-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kamatama41/set-pr-info-action/issues"
+  },
+  "homepage": "https://github.com/kamatama41/set-pr-info-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.0.0",
+    "@octokit/rest": "^16.36.0"
+  }
+}
