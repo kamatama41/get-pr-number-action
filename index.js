@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const Octokit = require("@octokit/rest");
+const Octokit = require('@octokit/rest');
 const octokit = new Octokit({auth: core.getInput('github_token')});
 
 function extractPrNumber(message) {
@@ -25,7 +25,7 @@ async function main() {
     let prNumber;
     switch (eventName) {
         case 'pull_request':
-            prNumber = payload["number"];
+            prNumber = payload['number'];
             break;
         case 'push':
             const fullName = payload['repository']['full_name'];
@@ -35,7 +35,7 @@ async function main() {
             const {data: pulls} = await octokit.pulls.list({
                 owner: owner,
                 repo: repo,
-                direction: "asc",
+                direction: 'asc',
             });
 
             const pull = pulls.find(pull => {
