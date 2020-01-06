@@ -1,16 +1,16 @@
 on: [push]
 
 jobs:
-  test:
+  test-and-release:
     runs-on: ubuntu-latest
-    name: An integration test
+    name: Continuous integration
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: Install dependencies
+    - name: Setup dependencies
       run: |
         npm install -g @zeit/ncc
         npm install
@@ -27,17 +27,12 @@ jobs:
           exit 1
         fi
         echo "${{ toJson(steps.action.outputs) }}"
-  release:
-    runs-on: ubuntu-latest
-    name: Release new version
-    needs: [test]
-    steps:
-      - name: Compile and commit
-        run: |
-          git add dist/index.js
-          git commit -m 'Compile index.js'
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
+    - name: Commit compiled file
+      run: |
+        git add dist/index.js
+        git commit -m 'Compile index.js'
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
