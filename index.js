@@ -14,7 +14,7 @@ function extractPrNumber(message) {
     if (res) {
         return res[1]
     }
-    throw new Error('Could not extract PR number from commit message');
+    return '';
 }
 
 async function main() {
@@ -50,6 +50,9 @@ async function main() {
             break;
         default:
             throw new Error(`Unsupported event: ${eventName}`);
+    }
+    if (prNumber === '') {
+        console.log('PR number cloud not found');
     }
     core.setOutput('number', prNumber);
 }
