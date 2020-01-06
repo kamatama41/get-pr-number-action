@@ -27,3 +27,17 @@ jobs:
           exit 1
         fi
         echo "${{ toJson(steps.action.outputs) }}"
+  release:
+    runs-on: ubuntu-latest
+    name: Release new version
+    needs: [test]
+    steps:
+      - name: Compile and commit
+        run: |
+          git add dist/index.js
+          git commit -m 'Compile index.js'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
