@@ -1,0 +1,44 @@
+on: [push]
+jobs:
+  test-and-release:
+    runs-on: ubuntu-latest
+    name: Continuous integration
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Setup dependencies
+      run: |
+        npm install -g @zeit/ncc
+        npm install
+        ncc build index.js
+    - name: Run action
+      id: action
+      uses: ./
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Assertion
+      run: |
+        if [[ "${{ steps.action.outputs.number }}" == "" ]]; then
+          echo "PR not found"
+          exit 1
+        fi
+        echo "${{ toJson(steps.action.outputs) }}"
+    - name: Commit compiled file
+      if: github.ref == 'refs/heads/release'
+      run: |
+        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config --global user.email "shiketaudonko41@gmail.com"
+        git config --global user.name "kamatama41"
+        git add dist/index.js
+        git commit -m 'Compile index.js'
+        git push origin ${{ github.ref }}
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      if: github.ref == 'refs/heads/release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        RELEASE_BRANCHES: release
