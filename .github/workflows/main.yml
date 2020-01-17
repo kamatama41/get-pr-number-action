@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    branches: ['**']
+    tags: []
 jobs:
   test-and-release:
     runs-on: ubuntu-latest
@@ -35,10 +38,3 @@ jobs:
         git add dist/index.js
         git commit -m 'Compile index.js'
         git push origin ${{ github.ref }}
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@master
-      if: github.ref == 'refs/heads/release'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
-        RELEASE_BRANCHES: release
