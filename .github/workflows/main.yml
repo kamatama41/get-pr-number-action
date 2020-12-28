@@ -1,4 +1,5 @@
 on:
+  pull_request:
   push:
     branches: ['**']
     tags: []
@@ -17,6 +18,8 @@ jobs:
         npm install -g @zeit/ncc
         npm install
         ncc build index.js
+    - name: Unit test
+      run: npm test
     - name: Run action
       id: action
       uses: ./
