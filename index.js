@@ -3,6 +3,7 @@ const github = require('@actions/github');
 const Octokit = require('@octokit/rest');
 const octokit = new Octokit({auth: core.getInput('github_token')});
 
+exports.extractPrNumber = extractPrNumber
 function extractPrNumber(message) {
   // Check as a merge commit
   let res = message.match(/^Merge pull request \#(\d+)/);
