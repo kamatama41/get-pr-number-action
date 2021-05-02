@@ -53,7 +53,7 @@ async function main() {
       throw new Error(`Unsupported event: ${eventName}`);
   }
   if (prNumber === '') {
-    console.log('PR number cloud not found');
+    console.log('The PR number could not be found');
   }
   core.setOutput('number', prNumber);
 }
