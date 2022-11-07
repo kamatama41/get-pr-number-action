@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const Octokit = require('@octokit/rest');
+const { Octokit } = require('@octokit/rest');
 const octokit = new Octokit({auth: core.getInput('github_token')});
 
 exports.extractPrNumber = extractPrNumber
