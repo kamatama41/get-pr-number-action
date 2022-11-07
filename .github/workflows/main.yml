@@ -12,10 +12,10 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '16.x'
     - name: Setup dependencies
       run: |
-        npm install -g @zeit/ncc
+        npm install -g @vercel/ncc
         npm install
         ncc build index.js
     - name: Unit test
