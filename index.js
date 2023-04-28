@@ -29,9 +29,13 @@ async function main() {
       prNumber = payload['number'];
       break;
     case 'push':
+    case 'check_suite':
       const fullName = payload['repository']['full_name'];
       const [owner, repo] = fullName.split('/');
-      const headCommit = payload['head_commit'];
+      const headCommit =
+        eventName === "push"
+          ? payload["head_commit"]
+          : payload["check_suite"]["head_commit"];
 
       prNumber = extractPrNumber(headCommit['message']);
       if (prNumber === '') {
