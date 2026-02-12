@@ -8,5 +8,5 @@ outputs:
   number:
     description: 'Number of pull request'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
